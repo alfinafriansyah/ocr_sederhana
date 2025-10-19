@@ -67,12 +67,15 @@ Setelah menyelesaikan praktikum ini, mahasiswa mampu:
 ## 📷 Dokumentasi Aplikasi
 
 - Tampilan Home Screen
+
 ![Home Screen](images/homescreen.png)
 
 -Tampilan Scan Screen
+
 ![Scan Screen](images/scanscreen.png)
 
 -Tampilan Result Screen
+
 ![Result Screen](images/resultscreen.png)
 
 ---

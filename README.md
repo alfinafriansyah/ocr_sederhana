@@ -108,3 +108,94 @@ Meskipun teknologi OCR sudah sangat canggih, tingkat akurasi pengenalannya berva
     Kegunaan: Memungkinkan pengguna untuk mengambil foto teks dari dunia nyata (misalnya, plang nama, menu, atau catatan) dan langsung menyalin teks tersebut ke ponsel, mencarinya di Google, atau menerjemahkannya.
 - CamScanner (atau aplikasi pemindai dokumen sejenis):
     Kegunaan: Digunakan untuk memindai dokumen kertas menggunakan kamera ponsel dan mengubah gambar hasil pindaian (scan) menjadi file PDF yang dapat dicari (searchable PDF) atau langsung mengekstrak teks di dalamnya untuk diedit.
+
+---
+
+## UTS Praktikum Pemrograman Mobile
+
+### Soal 1: Modifikasi Struktur Navigasi dan Aliran 
+
+Tujuan: Menyederhanakan alur navigasi dan meningkatkan pengalaman pengguna diHomeScreen.
+
+#### 1. Pengubahan Navigasi Home 
+- UbahElevatedButtondiHomeScreen(lib/screens/home_screen.dart) menjadi *widget* **ListTile**.
+- AturListTile: leading: Icon(Icons.camera_alt, color: Colors.blue); title: Text(’Mulai Pindai Teks Baru’).
+- Fungsi onTap harus menggunakan Navigator.push() untuk ke ScanScreen.
+
+📷 Screenshot Kode:
+![Kode Soal 1.1](images/listviewsoal1.png)
+
+#### 2. Teks Utuh dan Navigasi Balik
+- DiResultScreen(lib/screens/result_screen.dart), hapus fungsi ocrText.replaceAll(’\n’,”) agar hasil teks ditampilkan dengan baris baru (\n) yang utuh.
+- Tambahkan FloatingActionButton dengan ikon Icons.home.
+- Ketika tombol ditekan, navigasi harus kembali langsung ke HomeScreen menggunakan **Navigator.pushAndRemoveUntil()** (atau metode yang setara) untuk menghapus semua halaman di atasnya dari stack navigasi.
+
+📷 Screenshot Kode:
+![Kode Soal 1.2](images/navigasibaliksoal1.png)
+
+#### 📷 Screenshot Hasil:
+<p align="center">
+  <img src="images/homesoal1.png" width="250"/>
+  <img src="images/resultsoal1.png" width="250"/>
+</p>
+
+---
+
+### Soal 2: Penyesuaian Tampilan dan Penanganan State/Error 
+
+Tujuan: Memperbaiki tampilan *loading* dan memberikan *feedback* error yang lebih jelas.
+
+#### 1. Custom Loading Screen di ScanScreen 
+- DiScanScreen(lib/screens/scan_screen.dart), modifikasi tampilan *loading* yang muncul sebelum kamera siap (if (!controller.value.isInitialized)) :
+- Latar Belakang: Scaffold(backgroundColor: Colors.grey[900]).
+- Isi: Di dalam Center, tampilkan Column berisi CircularProgressIndicator(color: Colors.yellow).
+- Di bawah indikator, tambahkan Text(’Memuat Kamera... Harap tunggu.’, style: TextStyle(color: Colors.white, fontSize: 18)).
+
+📷 Screenshot Kode:
+![Kode Soal 2.1](images/loadingsoal2.png)
+
+#### 2. Spesifikasi Pesan Error
+- Di fungsi _takePicture() pada ScanScreen, modifikasi blok catch (e) untuk mengubah pesan *error* pada SnackBar.
+- Pesan SnackBar harus berbunyi: "Pemindaian Gagal! Periksa Izin Kamera atau coba lagi." (Hilangkan variabel *error* ($e)).
+
+📷 Screenshot Kode:
+![Kode Soal 2.2](images/pesanerrorsoal2.png)
+
+#### 📷 Screenshot Hasil:
+<p align="center">
+  <img src="images/loadingscansoal2.png" width="250"/>
+  <img src="images/errorscansoal2.png" width="250"/>
+</p>
+
+---
+
+### Soal 3: Implementasi Plugin Text-to-Speech (TTS) 
+
+Tujuan: Mengintegrasikan fitur membaca teks secara lisan menggunakan *plugin* flutter_tts.
+
+#### 1.	Instalasi Plugin
+-	Tambahkan *plugin* flutter_tts ke dalam file pubspec.yaml (gunakan versi terbaru yang kompatibel).
+-	Jalankan flutter pub get.
+
+📷 Screenshot Kode:
+![Kode Soal 3.1](images/pluginsoal3.png)
+
+#### 2.	Konversi Widget dan Inisialisasi (10 Poin):
+-	Ubah ResultScreen dari StatelessWidget menjadi **StatefulWidget**.
+-	Di initState(), inisialisasi FlutterTts dan atur bahasa pembacaan menjadi Bahasa Indonesia.
+-	Implementasikan dispose() untuk menghentikan mesin TTS saat halaman ditutup.
+
+📷 Screenshot Kode:
+![Kode Soal 3.2](images/konversiwidgetsoal3.png)
+
+#### 3.	Fungsionalitas Pembacaan (15 Poin):
+-	TambahkanFloatingActionButtonkeduadiResultScreen (atau ganti AppBar dengan action button) dengan ikon Icons.volume_up.
+-	Ketika tombol ditekan, panggil fungsi speak() pada FlutterTts untuk membacakan seluruh isi ocrText.
+
+📷 Screenshot Kode:
+![Kode Soal 3.3](images/buttonsoal3.png)
+
+#### 📷 Screenshot Hasil:
+<p align="center">
+  <img src="images/resultsoal3.png" width="250"/>
+</p>
